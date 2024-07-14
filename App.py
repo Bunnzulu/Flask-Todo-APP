@@ -1,10 +1,10 @@
-from flask import Flask
+from flask import Flask,render_template
 
 app = Flask(__name__ ,template_folder= "Templates")
 
 @app.route('/')  #Basically what shows on home page
-def hello_World():
-    return "Hello World"
+def Login_Screen():
+    return render_template("Login_Screen.html")
 
 
 
