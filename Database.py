@@ -10,7 +10,6 @@ engine = sqlal.create_engine(connection, connect_args={'connect_timeout': 60})
 
 def Add_Account(data):
     with engine.connect() as conn:
-        query = sqlal.text("INSERT INTO applications (job_id, full_name,email,resume_url) VALUES (:job_id, :full_name,:email,:resume_url)")
-
-        conn.execute(query,{"job_id":job_id,"full_name":data.get("full_name"),"email":data.get("Email"),"resume_url":data.get("Resume")})
+        query = sqlal.text("INSERT INTO Accounts (username, password) VALUES (:username, :password)")
+        conn.execute(query,{"username":data.get("Username"),"password":data.get("Password")})
         conn.commit()
