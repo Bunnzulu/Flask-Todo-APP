@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'bootstrap.html'%}
+</head>
+<body>
+    <div class="position-absolute top-0 end-0">
+        <a href="/" type="button" class="btn btn-primary btn-lg">Log Out</a>
+    </div>
+    <div class="position-absolute top-0 start-50 translate-middle-x mt-4">
+        <h1>Hi {{UserName}}!</h1><br>
+    </div>
+    <div class="position-absolute top-50 start-50 translate-middle-x"> 
+        <form action="/SavedNotes" method="post">
+            <label for="">Note:</label>
+            <textarea name="Note" id="Note" style="background-color: black; color: whitesmoke;" required></textarea><br>
+            <input type="submit">
+        </form>
+    </div>
+</body>
+</html>

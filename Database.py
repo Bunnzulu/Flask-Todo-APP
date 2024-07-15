@@ -27,3 +27,9 @@ def Get_Accounts():
         for row in result.all():
             Accounts.append(dict(row._mapping))
         return Accounts
+
+def Verify_Cred(data):
+    for account in Get_Accounts():
+        if account["username"] == data.get("Username") and account["password"] == data.get("Password"):
+            return True
+    return False
