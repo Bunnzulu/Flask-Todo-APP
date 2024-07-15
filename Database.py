@@ -17,6 +17,9 @@ def Add_Account(data):
             query = sqlal.text("INSERT INTO Accounts (username, password) VALUES (:username, :password)")
             conn.execute(query,{"username":data.get("Username"),"password":data.get("Password")})
             conn.commit()
+            query = sqlal.text("INSERT INTO TODO (username, Notes) VALUES (:username, :Notes)")
+            conn.execute(query,{"username":data.get("Username"),"Notes":[]})
+            conn.commit()
         return True
     else:return False
 
@@ -33,3 +36,18 @@ def Verify_Cred(data):
         if account["username"] == data.get("Username") and account["password"] == data.get("Password"):
             return True
     return False
+
+def Add_to_Notes(data):#where username = '{data.get("Name")}'
+    with engine.connect() as conn:
+        query = sqlal.text(f"UPDATE TODO set Notes = Notes + :NOTES")
+        conn.execute(query,{"NOTES":data.get("Note")})
+        conn.commit()
+
+
+def Show_Notes(data):
+    with engine.connect() as conn:
+        result = conn.execute(sqlal.text(f"select Notes from TODO where username = {data.get("name")}"))
+        # Notes = []
+        # for row in result.all():
+        #     Notes.append(dict(row._mapping))
+        return result.all()

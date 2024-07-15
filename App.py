@@ -1,5 +1,5 @@
-from flask import Flask,render_template,request
-from Database import Add_Account,Get_Accounts,Verify_Cred
+from flask import Flask,render_template,request,jsonify
+from Database import Add_Account,Get_Accounts,Verify_Cred,Add_to_Notes,Show_Notes
 
 app = Flask(__name__ ,template_folder= "Templates")
 ACCOUNTS = Get_Accounts()
@@ -34,8 +34,9 @@ def Main_Screen():
 @app.route('/SavedNotes',methods=["post"])  
 def TODO_Screen():
     data = request.form 
-    if Verify_Cred(data):return render_template("MakinTodos.html",UserName=data.get("Username"))
-    else:return render_template("LoginError.html")
+    Add_to_Notes(data)
+    # print(Show_Notes(data))
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
