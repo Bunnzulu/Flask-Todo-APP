@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'bootstrap.html'%}
+    <script>
+        function validateForm() {
+            const password = document.forms["Sign-up Sheet"]["Password"].value;
+            const confirmPassword = document.forms["Sign-up Sheet"]["CPassword"].value;
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                document.forms["Sign-up Sheet"]["Password"].value = '';
+                document.forms["Sign-up Sheet"]["CPassword"].value = '';
+                return false;
+            } else {
+                return true;
+            };
+        }
+    </script>
+</head>
+<body>
+    <body>
+        <div class="top-50 start-50 translate-middle text-center">
+            <h1 class="mb-4">Sign Up!</h1>
+            <form action="/" method="post" name="Sign-up Sheet" onsubmit="return validateForm()">
+                <label for="Username" >Username: </label>
+                <input type="text" name="Username" class="mb-4" required><br>
+                <label for="Password">Password: </label>
+                <input type="password" name="Password" required minlength="8" class="mb-2"><br>
+                <label for="CPassword">Comfirm Password: </label>
+                <input type="password" name="CPassword" required minlength="8" class="mb-2"><br>
+                <input type="submit" title="Sign up!" style="width: 100px;" class="mt-4">
+            </form>
+        </div>
+    </body>
+    </html>
+</body>
+</html>
