@@ -1,7 +1,7 @@
 from flask import Flask,render_template,request
 from Database import Add_Account,Get_Accounts,Verify_Cred,Add_to_Notes,Show_Notes,Delete_Note
 
-app = Flask(__name__ )
+app = Flask(__name__ ,template_folder= "Templates")
 ACCOUNTS = Get_Accounts()
 Login = [False,""]
 
