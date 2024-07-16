@@ -4,13 +4,22 @@
     {% include 'bootstrap.html'%}
 </head>
 <body>
-    <div class="position-absolute top-0 end-0"><a href="/Notes" type="button" class="btn btn-primary btn-lg">Back</a></div>
-    <div class="position-absolute top-50 start-50 translate-middle-x">
+    <div class="position-absolute top-0 end-0">
+        <a href="/Notes" type="button" class="btn btn-primary btn-lg">Back</a>
+    </div>
+    <div class="position-absolute top-0 start-50 translate-middle-x">
         <ul>
             {% for need in Needs%}
-                <li><p>need</p></li>
+                <li style="color: whitesmoke;" id="{{need}}">{{need}}</li>
                 {% endfor %}
         </ul>
+    </div>
+    <div class="position-absolute top-0 start-0">
+        <form action="/DeleteNotes" method="post">
+            <input type="text" placeholder="Put the complete name of the Task you want to delete" required name="Task">
+            <input type="text" value={{UserName}} hidden name="Name">
+            <input type="submit">
+        </form>
     </div>
 </body>
 </html>

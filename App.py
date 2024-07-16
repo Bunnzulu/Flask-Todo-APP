@@ -1,12 +1,13 @@
-from flask import Flask,render_template,request,jsonify
-from Database import Add_Account,Get_Accounts,Verify_Cred,Add_to_Notes,Show_Notes
+from flask import Flask,render_template,request
+from Database import Add_Account,Get_Accounts,Verify_Cred,Add_to_Notes,Show_Notes,Delete_Note
 
 app = Flask(__name__ ,template_folder= "Templates")
 ACCOUNTS = Get_Accounts()
+Login = False
+
 @app.route('/')  #Basically what shows on home page
 def Login_Screen():
     return render_template("Login_Screen.html")
-
 
 @app.route('/Sign-up')  
 def Sign_Up_Screen():
@@ -25,17 +26,31 @@ def Signed_Up_Screen():
     if New_account:return render_template("ConfirmSign-in.html")
     else:return render_template("BadUserName.html")
 
-@app.route('/Notes',methods=["post"])  
+@app.route('/Notes',methods=["post","get"])  
 def Main_Screen():
+    global Login
     data = request.form 
-    if Verify_Cred(data):return render_template("MakinTodos.html",UserName=data.get("Username"))
+    if Verify_Cred(data) or Login:
+        Login = False
+        return render_template("MakinTodos.html",UserName=data.get("Username"))
     else:return render_template("LoginError.html")
 
 @app.route('/SavedNotes',methods=["post"])  
 def TODO_Screen():
+    global Login
     data = request.form 
     Add_to_Notes(data)
-    return render_template("SEEToDos.html",Needs=Show_Notes(data).split("/n"))
+    Login = True
+    return render_template("SEEToDos.html",Needs=Show_Notes(data).split("/n")[:-1],UserName=data.get("Username"))
+
+@app.route('/DeleteNotes',methods=["post"])  
+def Deleted_Screen():
+    global Login
+    Login = True
+    data = request.form 
+    Delete_Note(data)
+    return render_template("ConfirmDeleted.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
