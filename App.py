@@ -7,7 +7,7 @@ Login = [False,""]
 
 @app.route('/')  #Basically what shows on home page
 def Login_Screen():
-    return render_template("Login_Screen.html")
+    return render_template("index.html")
 
 @app.route('/Sign-up')  
 def Sign_Up_Screen():
