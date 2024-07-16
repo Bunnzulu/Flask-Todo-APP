@@ -47,7 +47,8 @@ def Add_to_Notes(data):
 
 def Show_Notes(data):
     with engine.connect() as conn:
-        result = conn.execute(sqlal.text(f"select Notes from TODO where username = '{data.get("Username")}'"))
+        query = sqlal.text(f"select Notes from TODO where username = :name")
+        result = conn.execute(query,{"name":data.get("Username")})
         return result.first()[0]
 
 def Delete_Note(data):
