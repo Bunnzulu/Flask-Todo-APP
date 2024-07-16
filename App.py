@@ -30,7 +30,7 @@ def Signed_Up_Screen():
 def Main_Screen():
     global Login
     data = request.form 
-    if Verify_Cred(data) or Login:
+    if Verify_Cred(data) or Login[0]:
         Login[0] = False
         if Login[1] == "": Login[1] = data.get("Username")
         if data.get("Username") == None: return render_template("MakinTodos.html",UserName=Login[1])
