@@ -2,7 +2,7 @@ import sqlalchemy as sqlal
 from dotenv import load_dotenv
 import os
 import re
-load_dotenv(".env")
+load_dotenv("py.env")
 
 connection = os.getenv("DB_CONNECTION_STRING")
 
