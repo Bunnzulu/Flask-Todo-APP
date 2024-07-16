@@ -3,7 +3,7 @@ from Database import Add_Account,Get_Accounts,Verify_Cred,Add_to_Notes,Show_Note
 
 app = Flask(__name__ ,template_folder= "Templates")
 ACCOUNTS = Get_Accounts()
-Login = False
+Login = [False,""]
 
 @app.route('/')  #Basically what shows on home page
 def Login_Screen():
@@ -31,7 +31,9 @@ def Main_Screen():
     global Login
     data = request.form 
     if Verify_Cred(data) or Login:
-        Login = False
+        Login[0] = False
+        if Login[1] == "": Login[1] = data.get("Username")
+        if data.get("Username") == None: return render_template("MakinTodos.html",UserName=Login[1])
         return render_template("MakinTodos.html",UserName=data.get("Username"))
     else:return render_template("LoginError.html")
 
@@ -40,13 +42,13 @@ def TODO_Screen():
     global Login
     data = request.form 
     Add_to_Notes(data)
-    Login = True
+    Login[0] = True
     return render_template("SEEToDos.html",Needs=Show_Notes(data).split("/n")[:-1],UserName=data.get("Username"))
 
 @app.route('/DeleteNotes',methods=["post"])  
 def Deleted_Screen():
     global Login
-    Login = True
+    Login[0] = True
     data = request.form 
     Delete_Note(data)
     return render_template("ConfirmDeleted.html")

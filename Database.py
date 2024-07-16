@@ -41,19 +41,19 @@ def Verify_Cred(data):
 def Add_to_Notes(data):
     with engine.connect() as conn:
         query = sqlal.text("UPDATE TODO set Notes = CONCAT(Notes,:NOTES,:Space) WHERE username = :name")
-        conn.execute(query,{"NOTES":data.get("Note"),"Space":"/n","name":data.get("Name")})
+        conn.execute(query,{"NOTES":data.get("Note"),"Space":"/n","name":data.get("Username")})
         conn.commit()
 
 
 def Show_Notes(data):
     with engine.connect() as conn:
-        result = conn.execute(sqlal.text(f"select Notes from TODO where username = '{data.get("Name")}'"))
-        return result.all()[0][0]
+        result = conn.execute(sqlal.text(f"select Notes from TODO where username = '{data.get("Username")}'"))
+        return result.first()[0]
 
 def Delete_Note(data):
     Note = Show_Notes(data)
-    Note = re.sub(f".*{data.get("Task")}.*",'',Note)
+    Note = re.sub(f"{data.get("Task")}/n",'',Note)
     with engine.connect() as conn:
-        query = sqlal.text("UPDATE TODO set Notes = NewNote WHERE username = :name")
-        conn.execute(query,{"NewNote":Note,"name":data.get("Name")})
+        query = sqlal.text("UPDATE TODO set Notes = :NewNote WHERE username = :name")
+        conn.execute(query,{"NewNote":Note,"name":data.get("Username")})
         conn.commit()
