@@ -53,7 +53,7 @@ def Show_Notes(data):
 
 def Delete_Note(data):
     Note = Show_Notes(data)
-    Note = re.sub(f"{data.get("Task")}/n",'',Note)
+    Note = re.sub(f"{data.get('Task')}/n",'',Note)
     with engine.connect() as conn:
         query = sqlal.text("UPDATE TODO set Notes = :NewNote WHERE username = :name")
         conn.execute(query,{"NewNote":Note,"name":data.get("Username")})
