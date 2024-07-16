@@ -35,8 +35,7 @@ def Main_Screen():
 def TODO_Screen():
     data = request.form 
     Add_to_Notes(data)
-    # print(Show_Notes(data))
-    return jsonify(data)
+    return render_template("SEEToDos.html",Needs=Show_Notes(data).split("/n"))
 
 if __name__ == '__main__':
     app.run(debug=True)
