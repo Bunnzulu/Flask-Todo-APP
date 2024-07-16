@@ -1,0 +1,5 @@
+Flask
+sqlalchemy
+dotenv
+gunicorn
+pymysql
